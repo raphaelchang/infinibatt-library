@@ -3,7 +3,7 @@
 
 #include "ch.h"
 
-typedef struct
+typedef enum
 {
     // Infinity packet IDs
     CAN_PACKET_INFINITY_STATUS = 0x00,

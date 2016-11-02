@@ -2,6 +2,7 @@
 #include "ch.h"
 #include "hal.h"
 #include <math.h>
+#include <string.h>
 
 static volatile int sys_lock_cnt = 0;
 
@@ -141,35 +142,43 @@ void utils_norm_angle_rad(float *angle) {
     }
 }
 
-int16_t utils_parse_int16(const uint8_t *buffer, int32_t index) {
-    int16_t res =   ((uint16_t) buffer[index]) << 8 |
-        ((uint16_t) buffer[index + 1]);
-    index += 2;
+int16_t utils_parse_int16(const uint8_t *buffer, int32_t *index) {
+    int16_t res =   ((uint16_t) buffer[*index]) << 8 |
+        ((uint16_t) buffer[*index + 1]);
+    *index += 2;
     return res;
 }
 
-uint16_t utils_parse_uint16(const uint8_t *buffer, int32_t index) {
-    uint16_t res =  ((uint16_t) buffer[index]) << 8 |
-        ((uint16_t) buffer[index + 1]);
-    index += 2;
+uint16_t utils_parse_uint16(const uint8_t *buffer, int32_t *index) {
+    uint16_t res =  ((uint16_t) buffer[*index]) << 8 |
+        ((uint16_t) buffer[*index + 1]);
+    *index += 2;
     return res;
 }
 
-int32_t utils_parse_int32(const uint8_t *buffer, int32_t index) {
-    int32_t res =   ((uint32_t) buffer[index]) << 24 |
-        ((uint32_t) buffer[index + 1]) << 16 |
-        ((uint32_t) buffer[index + 2]) << 8 |
-        ((uint32_t) buffer[index + 3]);
-    index += 4;
+int32_t utils_parse_int32(const uint8_t *buffer, int32_t *index) {
+    int32_t res =   ((uint32_t) buffer[*index]) << 24 |
+        ((uint32_t) buffer[*index + 1]) << 16 |
+        ((uint32_t) buffer[*index + 2]) << 8 |
+        ((uint32_t) buffer[*index + 3]);
+    *index += 4;
     return res;
 }
 
-uint32_t utils_parse_uint32(const uint8_t *buffer, int32_t index) {
-    uint32_t res =  ((uint32_t) buffer[index]) << 24 |
-        ((uint32_t) buffer[index + 1]) << 16 |
-        ((uint32_t) buffer[index + 2]) << 8 |
-        ((uint32_t) buffer[index + 3]);
-    index += 4;
+uint32_t utils_parse_uint32(const uint8_t *buffer, int32_t *index) {
+    uint32_t res = ((uint32_t) buffer[*index]) << 24 |
+        ((uint32_t) buffer[*index + 1]) << 16 |
+        ((uint32_t) buffer[*index + 2]) << 8 |
+        ((uint32_t) buffer[*index + 3]);
+    *index += 4;
+    return res;
+}
+
+float utils_parse_float32(const uint8_t *buffer, int32_t *index)
+{
+    float res;
+    memcpy(&res, buffer + *index, sizeof(float));
+    *index += 4;
     return res;
 }
 

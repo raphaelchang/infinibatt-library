@@ -27,5 +27,6 @@ void utils_append_uint16(uint8_t* buffer, uint16_t number, uint32_t *index);
 void utils_append_int32(uint8_t* buffer, int32_t number, uint32_t *index);
 void utils_append_uint32(uint8_t* buffer, uint32_t number, uint32_t *index);
 void utils_append_float32(uint8_t *buffer, float value, uint32_t *index);
+void utils_reverse_copy(uint8_t *dest, const uint8_t *src, uint32_t size);
 
 #endif

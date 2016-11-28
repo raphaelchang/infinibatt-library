@@ -177,7 +177,7 @@ uint32_t utils_parse_uint32(const uint8_t *buffer, int32_t *index) {
 float utils_parse_float32(const uint8_t *buffer, int32_t *index)
 {
     float res;
-    memcpy(&res, buffer + *index, sizeof(float));
+    utils_reverse_copy((uint8_t*)&res, buffer + *index, sizeof(float));
     *index += 4;
     return res;
 }
@@ -208,8 +208,16 @@ void utils_append_uint32(uint8_t* buffer, uint32_t number, uint32_t *index) {
 
 void utils_append_float32(uint8_t *buffer, float value, uint32_t *index) {
     char *bytes = (char*) &value;
-    buffer[(*index)++] = bytes[0];
-    buffer[(*index)++] = bytes[1];
-    buffer[(*index)++] = bytes[2];
     buffer[(*index)++] = bytes[3];
+    buffer[(*index)++] = bytes[2];
+    buffer[(*index)++] = bytes[1];
+    buffer[(*index)++] = bytes[0];
+}
+
+void utils_reverse_copy(uint8_t *dest, const uint8_t *src, uint32_t size)
+{
+    for (int32_t i = size - 1; i >= 0; i--)
+    {
+        dest[i] = src[size - i - 1];
+    }
 }
